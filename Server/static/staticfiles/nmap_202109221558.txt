@@ -1,0 +1,13 @@
+# Nmap 7.80 scan initiated Wed Sep 22 15:58:16 2021 as: nmap -oN /home/ubuntu/nmap_202109221558.txt 192.168.0.1
+Nmap scan report for _gateway (192.168.0.1)
+Host is up (0.0087s latency).
+Not shown: 995 closed ports
+PORT     STATE SERVICE
+22/tcp   open  ssh
+53/tcp   open  domain
+80/tcp   open  http
+1900/tcp open  upnp
+8888/tcp open  sun-answerbook
+MAC Address: E8:48:B8:3E:35:F8 (Unknown)
+
+# Nmap done at Wed Sep 22 15:58:17 2021 -- 1 IP address (1 host up) scanned in 0.69 seconds

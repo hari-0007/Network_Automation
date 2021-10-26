@@ -1,0 +1,49 @@
+{% extends "base2.html" %}
+{% block body_block %}
+
+<form method="POST" class="post-form" action="/basicapp/client/">
+		{% csrf_token %}
+
+	<div class="container">
+		<br>
+		<div class="form-group row">
+		<label class="col-sm-1 col-form-lable"></label>	
+			<div class="col-sm-4">
+				<h3>Enter Details</h3>
+			</div>
+		</div>
+	
+
+		<div class="form-group row">
+			<label class="col-sm-2 col-form-lable">Client ID : </label>
+			<div class="col-sm-4">
+				{{ form.client_id }}
+			</div>
+		</div>
+
+		<div class="form-group row">
+			<label class="col-sm-2 col-form-lable">Client Name : </label>
+			<div class="col-sm-4">
+				{{ form.client_name }}
+			</div>
+		</div>
+
+		<div class="form-group row">
+			<label class="col-sm-2 col-form-lable">Client Email : </label>
+			<div class="col-sm-4">
+				{{ form.client_email }}
+			</div>
+		</div>
+
+		<div class="form-group row">
+			<label class="col-sm-2 col-form-lable"> Client Contact : </label>
+			<div class="col-sm-4">
+				{{ form.client_contact }}
+			</div>
+		</div>
+		<button type="submit" class="btn btn-primary">Submit</button>
+	</div>
+
+</form>
+
+{% endblock %}

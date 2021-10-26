@@ -1,0 +1,58 @@
+# Nmap 7.80 scan initiated Wed Sep 22 14:28:59 2021 as: nmap -oN /home/ubuntu/nmap_202109221428.txt 192.168.0.0/24
+Nmap scan report for _gateway (192.168.0.1)
+Host is up (0.0058s latency).
+Not shown: 995 closed ports
+PORT     STATE SERVICE
+22/tcp   open  ssh
+53/tcp   open  domain
+80/tcp   open  http
+1900/tcp open  upnp
+8888/tcp open  sun-answerbook
+MAC Address: E8:48:B8:3E:35:F8 (Unknown)
+
+Nmap scan report for 192.168.0.50
+Host is up (0.0041s latency).
+Not shown: 993 closed ports
+PORT     STATE SERVICE
+21/tcp   open  ftp
+23/tcp   open  telnet
+80/tcp   open  http
+443/tcp  open  https
+515/tcp  open  printer
+631/tcp  open  ipp
+9100/tcp open  jetdirect
+MAC Address: DC:E9:94:70:52:B2 (Unknown)
+
+Nmap scan report for 192.168.0.101
+Host is up (0.0066s latency).
+Not shown: 997 filtered ports
+PORT    STATE SERVICE
+135/tcp open  msrpc
+139/tcp open  netbios-ssn
+445/tcp open  microsoft-ds
+MAC Address: 6C:6A:77:96:63:C9 (Unknown)
+
+Nmap scan report for 192.168.0.105
+Host is up (0.0031s latency).
+Not shown: 996 filtered ports
+PORT     STATE SERVICE
+443/tcp  open  https
+902/tcp  open  iss-realsecure
+912/tcp  open  apex-mesh
+5357/tcp open  wsdapi
+MAC Address: D8:BB:C1:08:5E:86 (Unknown)
+
+Nmap scan report for 192.168.0.106
+Host is up (0.0022s latency).
+Not shown: 999 closed ports
+PORT     STATE SERVICE
+3306/tcp open  mysql
+MAC Address: F0:18:98:53:4A:D0 (Apple)
+
+Nmap scan report for ubuntu (192.168.0.107)
+Host is up (0.000024s latency).
+Not shown: 999 closed ports
+PORT   STATE SERVICE
+22/tcp open  ssh
+
+# Nmap done at Wed Sep 22 14:29:18 2021 -- 256 IP addresses (6 hosts up) scanned in 19.36 seconds

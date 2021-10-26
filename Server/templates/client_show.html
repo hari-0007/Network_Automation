@@ -1,0 +1,117 @@
+{% extends "base2.html" %}
+{% block body_block %}
+<nav class="navbar navbar-light bg-light justify-content-between">
+  <a class="navbar-brand">Client Record</a>
+  <form class="form-inline">
+ <div class="input-group">
+                            <input name="q" type="text" placeholder="Search" class="form-control form-control-lg" />
+                            <div class="input-group-append">
+
+    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+  </form>
+</nav>
+
+	<div class="container">
+	<table class="table table-striped table-bordered table-sm">
+		<thead class="thead-dark">
+			<tr>
+				<th>Client ID</th>
+				<th>Client Name</th>
+				<th>Client Email</th>
+				<th>Client Contact</th>
+				<th>Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for client in clients %}
+			<tr>
+				<td>{{ client.client_id }}</td>
+				<td>{{ client.client_name }}</td>
+				<td>{{ client.client_email }}</td>
+				<td>{{ client.client_contact }}</td>
+				<td>
+					<a href="/basicapp/edit/{{ client.id }}"><span class="glyphicon glyphicon-pencil">Edit</span></a> | 
+					<a href="/basicapp/delete/{{ client.id}}">Delete</a>
+				</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	<center><a href="/basicapp/client" class="btn btn-primary">Add New Record</a></center>
+</div>
+
+<nav aria-label="Page navigation example">
+<div class="pagination">
+    <span class="step-links">
+        {% if clients.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ clients.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ clients.number }} of {{ clients.paginator.num_pages }}.
+        </span>
+
+        {% if clients.has_next %}
+            <a href="?page={{ clients.next_page_number }}">next</a>
+            <a href="?page={{ clients.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+
+
+</nav>
+
+<p>
+<a href="{{request.META.HTTP_REFERER}}">Go back</a>
+</p>
+
+{% endblock %}
+
+<div class="pagination">
+    <span class="step-links">
+        {% if clients.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ clients.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ clients.number }} of {{ clients.paginator.num_pages }}.
+        </span>
+
+        {% if clients.has_next %}
+            <a href="?page={{ clients.next_page_number }}">next</a>
+            <a href="?page={{ clients.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+
+
+
+    <li class="page-item"><a class="page-link" href="{{clients.previous_page_link}}">Previous</a></li>
+
+{{ client.id}}
+
+      <ul class="pagination">
+            {% if clients.has_previous %}
+            <li class="page-item"> <a href="?page=1" class="page-link"><< First</a> </li>
+            <li class="page-item"><a href="{{clients_obj.previous_page_link}}" class="page-link">< Previous</a></li>
+            {% endif %}
+            {% if clients.has_next %}
+            <li class="page-item"><a href="?page={{clients_obj.next_page_number}}" class="page-link">Next ></a></li>
+            <li class="page-item"><a href="?page={{clients_obj.paginator.num_pages}}" class="page-link">Last >></a>
+            </li>
+            {% endif %}
+        </ul> 
+
+
+<ul class="pagination">
+            {% if clients.has_previous %}
+    <li class="page-item"><a class="page-link" href="?page=1">1</a></li>
+    <li class="page-item"><a class="page-link" href="{{clients.previous_page_link}}">Previous</a></li>
+{% endif %}
+            {% if clients.has_next %}
+    <li class="page-item"><a class="page-link" href="?page={{clients.next_page_number}}">Next</a></li>
+    <li class="page-item"><a class="page-link" href="?page={{clients.paginator.num_pages}}">Last</a></li>
+{% endif %}
+ </ul>

@@ -1,0 +1,49 @@
+{% extends "base2.html" %}
+{% block body_block %}
+
+
+
+<form method="POST" class="post-form" action="/basicapp/update/{{client.id}}">
+		{% csrf_token %}
+
+	<div class="container">
+		<br>
+		<div class="form-group row">
+		<label class="col-sm-1 col-form-lable"></label>	
+			<div class="col-sm-4">
+				<h3>Update Details</h3>
+			</div>
+		</div>
+	
+
+		<div class="form-group row">
+			<label class="col-sm-2 col-form-lable">Client ID : </label>
+			<div class="col-sm-4">
+				<input type="text" name="client_id" id="client_id" value="{{ client.client_id }}"/>
+			</div>
+		</div>
+
+		<div class="form-group row">
+			<label class="col-sm-2 col-form-lable">Client Name : </label>
+			<div class="col-sm-4">
+				<input type="text" name="client_name" id="client_name" value="{{ client.client_name }}"/>
+			</div>
+		</div>
+
+		<div class="form-group row">
+			<label class="col-sm-2 col-form-lable">Client Email : </label>
+			<div class="col-sm-4">
+				<input type="text" name="client_email" id="client_email" value="{{ client.client_email }}"/>
+			</div>
+		</div>
+
+		<div class="form-group row">
+			<label class="col-sm-2 col-form-lable">Client Contact : </label>
+			<div class="col-sm-4">
+				<input type="text" name="client_contact" id="client_contact" value="{{ client.client_contact }}"/>
+			</div>
+		</div>
+		<button type="submit" class="btn btn-success">Update</button>
+	</div>
+
+{% endblock %}

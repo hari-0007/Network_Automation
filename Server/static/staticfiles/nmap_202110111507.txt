@@ -1,0 +1,4 @@
+# Nmap 7.80 scan initiated Mon Oct 11 15:07:50 2021 as: nmap -oN /home/ubuntu/nmap_202110111507.txt None
+Failed to resolve "None".
+WARNING: No targets were specified, so 0 hosts scanned.
+# Nmap done at Mon Oct 11 15:07:51 2021 -- 0 IP addresses (0 hosts up) scanned in 0.25 seconds

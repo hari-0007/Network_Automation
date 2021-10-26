@@ -1,0 +1,8 @@
+# Nmap 7.80 scan initiated Fri Jul  2 14:11:26 2021 as: nmap -oN /home/ubuntu/nmap_202107021411.txt 10.8.0.6
+Nmap scan report for ubuntu (10.8.0.6)
+Host is up (0.000024s latency).
+Not shown: 999 closed ports
+PORT   STATE SERVICE
+22/tcp open  ssh
+
+# Nmap done at Fri Jul  2 14:11:27 2021 -- 1 IP address (1 host up) scanned in 0.33 seconds

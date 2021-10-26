@@ -1,0 +1,92 @@
+{% extends "base2.html" %}
+{% block body_block %}
+
+    <div class="container">
+      <div class="jumbotron">
+      <h2 >Select a date to view the capture data!</h2>
+
+              <form method="post" action= "" id ="cap_sec" >
+
+                {% csrf_token %}
+               
+                </p>
+                 <label for="dev_loc">Choose your device from the list:</label>
+               <select name="dev_loc" id="dev_loc">
+                {% for i in devicelocation %}
+                <option> {{i.0}} </option>
+               {% endfor %}
+              </select>
+               </p>
+                <label for="cap_sec"> Enter the capture duration(Secs): </label>
+                <input id="cap_sec" type="number" name="cap_sec">
+
+                <input type="submit" value="Submit">
+                </form>
+
+        </p>
+
+              <form method="post" action="/basicapp/scandownload/" id="" >
+              {% csrf_token %}
+          
+              <p> Download the Capture ID number {{ datacapture }}</p>
+
+       
+              <input id="" type="submit" class="btn btn-danger"  value="Download">
+
+              </form>
+
+   </p>
+
+              <form method="post" action="/basicapp/pcapview/" id="" >
+              {% csrf_token %}
+
+
+              <input id="" type="submit" class="btn btn-danger"  value="View">
+
+              </form>    
+<p>
+<a href="{{request.META.HTTP_REFERER}}">Go back</a>
+</p>
+ 
+ </div>
+    </div>
+
+
+{% endblock %}
+
+
+
+<a href="link/to/your/download/file" download>Download link</a>
+<form method="post" action="/basicapp/download/" id="cap_id" >
+              {% csrf_token %}
+              <label for="cap_id">Choose a capture ID and download:</label>
+              <select type="radio" id="cap_id" name="cap_id">
+               <p> Capture ID Number is {{ datacapture }}</p>
+               {% for i in datacapture %}
+               <option> {{i.0}} </option>
+               {% endfor %}
+               </select>
+              <input id="cap_id" type="submit" class="btn btn-danger"  value="Download">
+
+
+
+profiles = Profiles.objects.all;
+render_to_response('template.html', {'profiles': profiles })
+
+{% for profile in profiles %}
+      <p>{{ profile.first_name }}</p>
+      <p>{{ profile.surname }}</p>
+{% endfor %}
+
+                <center><label for="abc">Input Text</label>
+                <input type="text" name="input_text"class="form-group"   id="abc"placeholder="Text input">
+
+
+
+<form method="post" action="/basicapp/download/" id="cap_id" >
+              {% csrf_token %}
+              <p>{{ datacapture }}</p>
+
+
+              <input id="cap_id" type="submit" class="btn btn-danger"  value="Download">
+              </form>

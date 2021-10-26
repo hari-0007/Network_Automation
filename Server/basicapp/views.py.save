@@ -1,0 +1,252 @@
+from .forms import UserForm,UserProfileInfoForm
+from django.shortcuts import render,redirect
+from django.conf import settings as django_settings
+import os
+import mimetypes
+#from django.core.servers.basehttp import FileWrapper
+from wsgiref.util import FileWrapper
+
+
+# Extra Imports for the Login and Logout Capabilities
+from django.contrib.auth import authenticate, login, logout
+from django.http import HttpResponseRedirect, HttpResponse
+from django.urls import reverse
+from django.contrib.auth.decorators import login_required
+
+# Create your views here.
+def index(request):
+    return render(request,'index.html')
+
+
+@login_required
+def special(request):
+    # Remember to also set login url in settings.py!
+    # LOGIN_URL = '/basicapp/user_login/'
+    return HttpResponse("You are logged in. Nice!")
+
+@login_required
+def user_logout(request):
+    # Log out the user.
+    logout(request)
+    # Return to homepage.
+    return HttpResponseRedirect(reverse('index'))
+
+def register(request):
+
+    registered = False
+
+    if request.method == 'POST':
+
+        # Get info from "both" forms
+        # It appears as one form to the user on the .html page
+        user_form = UserForm(data=request.POST)
+        profile_form = UserProfileInfoForm(data=request.POST)
+
+        # Check to see both forms are valid
+        if user_form.is_valid() and profile_form.is_valid():
+
+            # Save User Form to Database
+            user = user_form.save()
+
+            # Hash the password
+            user.set_password(user.password)
+
+            # Update with Hashed password
+            user.save()
+
+            # Now we deal with the extra info!
+
+            # Can't commit yet because we still need to manipulate
+            profile = profile_form.save(commit=False)
+
+            # Set One to One relationship between
+            # UserForm and UserProfileInfoForm
+            profile.user = user
+
+            # Check if they provided a profile picture
+            if 'profile_pic' in request.FILES:
+                print('found it')
+                # If yes, then grab it from the POST form reply
+                profile.profile_pic = request.FILES['profile_pic']
+
+            # Now save model
+            profile.save()
+
+            # Registration Successful!
+            registered = True
+
+        else:
+            # One of the forms was invalid if this else gets called.
+            print(user_form.errors,profile_form.errors)
+
+    else:
+        # Was not an HTTP post so we just render the forms as blank.
+        user_form = UserForm()
+        profile_form = UserProfileInfoForm()
+
+    # This is the render and context dictionary to feed
+    # back to the registration.html file page.
+    return render(request,'registration.html',
+                          {'user_form':user_form,
+                           'profile_form':profile_form,
+                           'registered':registered})
+
+def user_login(request):
+
+    if request.method == 'POST':
+        # First get the username and password supplied
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        # Django's built-in authentication function:
+        user = authenticate(username=username, password=password)
+
+        # If we have a user
+        if user:
+            #Check it the account is active
+            if user.is_active:
+                # Log the user in.
+                login(request,user)
+                # Send the user back to some page.
+                # In this case their homepage.
+                return HttpResponseRedirect(reverse('index'))
+            else:
+                # If account is not active:
+                return HttpResponse("Your account is not active.")
+        else:
+            print("Someone tried to login and failed.")
+            print("They used username: {} and password: {}".format(username,password))
+            return HttpResponse("Invalid login details supplied.")
+
+    else:
+        #Nothing has been provided for username or password.
+        return render(request, 'login.html', {})
+
+
+
+# Database Connection Code .
+import mysql.connector
+connection = mysql.connector.connect(host='167.71.236.9',database='tshark_db',user='mysqltest',password='Pa$$w0rd')
+print('Successfully connected to database')
+cursor = connection.cursor()
+
+def home(request):
+    cursor = connection.cursor()
+    if request.method == 'POST':
+       cursor.close()
+       cursor = connection.cursor()
+       #data=[]
+       input_date=request.POST.get('cap_date')
+       cur_input ="select cap_id from tshark_db_table where Date='%s'"%(input_date)
+       print(cur_input)
+       cursor.execute(cur_input)
+       data = ()
+       print(list(data))
+       cursor.close()
+
+       if request.method == 'POST':
+          cap_id=request.POST.get('cap_id')
+          download_cap(cap_id)
+          cap_name = "data_capture_%s.pcap"%(cap_id)
+          print(cap_name)
+          #download_file(cap_name)
+       else:
+           print("Database not Connected.")
+    else:
+        print("Database not Connected")
+
+#    cursor.close()
+#    connection.close()
+#    print("MySQL connection is closed")
+    
+    return render(request,'home.html',{'datacapture':data})
+
+# TO Crteate download link
+#def download_file(cp_nm):
+#    fl_path = os.path.join(django_settings.STATIC_ROOT)   #‘/file/path'
+#    filename = cp_nm #‘downloaded_file_name.extension’
+ #   fl = open(fl_path, "r")
+  #  mime_type, _ = mimetypes.guess_type(fl_path)
+   # response = HttpResponse(fl, content_type=mime_type)
+   # response['Content-Disposition'] = "attachment; filename=%s" % filename
+   # return response
+def download_pcap(request):
+    cap_id=request.POST.get('cap_id')
+    download_cap(cap_id)
+    cap_name = "data_capture_%s.pcap"%(cap_id)
+    print(cap_name)
+    f_path =os.path.join(django_settings.STATIC_ROOT)
+    print(f_path)
+    f_nm = "%s/data_capture_%s.pcap"%(f_path,cap_id)
+    capfile=cap_name
+    filename = f_nm
+    filewrapper = FileWrapper(open(filename, 'rb'))
+    response = HttpResponse(filewrapper, content_type='text/pcap')
+    response['Content-Length'] = os.path.getsize(filename)
+    response['Content-Disposition'] = 'attachment; filename="{}"'.format(capfile +".pcap")
+    return response
+
+
+def date_view(request):
+    cap_date = request.POST
+    print(cap_date+"This is the date")
+    return render(request, "home.html")
+
+def download_cap(cap_num):
+    cap_id = cap_num
+    f_path =os.path.join(django_settings.STATIC_ROOT)
+    print(f_path)
+    f_nm = "%s/data_capture_%s.pcap"%(f_path,cap_id)
+    print(f_nm)
+    readBLOB(cap_id,f_nm)
+
+    #filename="data_capture_%s.pcap"%(cap_id)
+    #f1 = open(f_path, "r")
+    #mime_type, _ = mimetypes.guess_type(f_path)
+    #response = HttpResponse(f1, content_type=mime_type)
+    #response['Content-Disposition'] = "attachment; filename=%s" % filename
+    #return response
+    #return render(request,'download_page.html')
+def capture_id_ls():
+    cursor.execute("select cap_id from tshark_db_table where Date='2021-05-05'")
+    data = cursor.fetchall()
+    #return list(data)
+    print(list(data))
+    return data
+
+
+
+
+
+def write_file(data, filename):
+    # Convert binary data to proper format and write it on Hard Disk
+    with open(filename, 'wb') as file:
+        file.write(data)
+
+def readBLOB(cap_id, tshark_data):
+    cursor = connection.cursor()
+    print("Reading BLOB data from tshark data table")
+
+    try:
+
+        sql_fetch_blob_query = """SELECT * from tshark_db_table where cap_id = %s"""
+        cursor.execute(sql_fetch_blob_query,(cap_id,))
+        record = cursor.fetchall()
+        for row in record:
+            print("Id = ", row[0])
+            tshark_file = row[1]
+
+            print("Storing the captured data on the local disk \n")
+            write_file(tshark_file, tshark_data)
+
+    except mysql.connector.Error as error:
+        print("Failed to read BLOB data from MySQL table {}".format(error))
+
+    finally:
+        if (connection.is_connected()):
+#            cursor.close()
+#            connection.close()
+            print("MySQL connection is Established")
+
+    cursor.close()
+    #connection.close()

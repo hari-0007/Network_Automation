@@ -1,0 +1,44 @@
+{% extends "base2.html" %}
+{% block body_block %}
+
+
+ <div class="container">
+      <div class="jumbotron">  
+<title>New User Registration Form</title>  
+
+<body>  
+<form method="POST" class="post-form" action="#">  
+{% csrf_token %}  
+<div class="container">  
+<div class="form-group">
+	<label for="username" class="control-label col-sm-2">Client Name</label>
+	<div class="col-sm-10">
+	<input type="text" name="username" value=""/>
+	</div>
+</div> 
+<div class="form-group">
+	<label for="email" class="control-label col-sm-2">Email</label>
+	<div class="col-sm-10">
+	<input type="text" name="email" value=""/>
+	</div>
+</div> 
+<div class="form-group">
+	<label for="contact" class="control-label col-sm-2">Contact</label>
+	<div class="col-sm-10">
+	<input type="text" name="contact" value=""/>
+	</div>
+</div> 
+<div class="form-group">
+	<label for="userid" class="control-label col-sm-2">Client Id</label>
+	<div class="col-sm-10">
+	<input type="text" name="userid" value=""/>
+	</div>
+</div> 
+<div class="form-group">
+<button type="submit" class="btn btn-default">Submit</button> 
+</div>
+</div> 
+
+ </div>
+    </div>
+{% endblock %}

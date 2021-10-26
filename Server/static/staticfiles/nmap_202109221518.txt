@@ -1,0 +1,4 @@
+# Nmap 7.80 scan initiated Wed Sep 22 15:18:57 2021 as: nmap -oN /home/ubuntu/nmap_202109221518.txt 192.168.0.1/
+Unable to split netmask from target expression: "192.168.0.1/"
+WARNING: No targets were specified, so 0 hosts scanned.
+# Nmap done at Wed Sep 22 15:18:57 2021 -- 0 IP addresses (0 hosts up) scanned in 0.10 seconds

@@ -1,0 +1,2 @@
+# Nmap 7.80 scan initiated Sat Sep 25 10:24:52 2021 as: nmap -oN /home/ubuntu/nmap_202109251024.txt 192.168.0.7
+# Nmap done at Sat Sep 25 10:24:52 2021 -- 1 IP address (0 hosts up) scanned in 0.59 seconds

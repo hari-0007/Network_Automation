@@ -1,0 +1,130 @@
+
+{% extends "base2.html" %}
+{% block body_block %}
+{% load render_table from django_tables2 %}
+
+    <div class="container">
+      <div class="jumbotron">
+      <h2 >NMAP Scan!</h2>
+
+              <form method="post" action= "" id ="dev_loc" >
+
+                {% csrf_token %}
+
+                </p>
+                 <label for="dev_loc">Choose your device from the list:</label>
+               <select name="dev_loc" id="dev_loc">
+                {% for i in devicelocation %}
+                <option> {{i.0}} </option>
+               {% endfor %}
+              </select>
+              </p>
+             <input type="submit" value="Submit">
+
+              
+                 </form>
+	     
+
+		</p>  
+
+             <p>Interface Name & IP Address </p>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Interface 1</th>
+      <th scope="col">Interface 2</th>
+      <th scope="col">Interface 3</th>
+
+    </tr>
+  </thead>
+  <tbody>
+
+    <tr>
+
+      <th scope="row">Interface Name</th>
+                 {% for i in Interface_name %}
+      <td>{{i.0}}</td>
+          {% endfor %}
+
+    </tr>
+
+    <tr>
+
+      <th scope="row">IP Address</th>
+           {% for i in Interface_name %}
+
+      <td>{{i.1}}</td>
+          {% endfor %}
+
+    </tr>
+
+  </tbody>
+</table>
+</p>
+              <form method="post" action= "" id ="nmapip" >
+              {% csrf_token %}
+
+
+               </p>
+               <label for="dev_loc">Choose your device from the list:</label>
+               <select name="dev_loc" id="dev_loc">
+                {% for i in devicelocation %}
+                <option> {{i.0}} </option>
+               {% endfor %}
+              </select>
+                <label for="nmapip">Enter the IP Address:</label><br>
+                 <input type="text" id="nmapip" name="nmapip" ><br>
+                 <label for="nmapsubnet">Enter Subnet Value:</label><br>
+                 <input type="text" id="nmapsubnet" name="nmapsubnet" >
+                <input type="submit" value="Submit">
+                </form>
+
+        </p>
+
+
+              <form method="post" action="/basicapp/nmapdownload/" id="nmapip" >
+              {% csrf_token %}
+
+
+              <p> Download the Nmap ID number {{ datacapture }}</p>
+
+
+              <input id="" type="submit" class="btn btn-danger"  value="Download">
+
+              </form>
+             </p>
+              <form method="post" action="/basicapp/nmapview/" id="" >
+              {% csrf_token %}
+
+
+              <input id="" type="submit" class="btn btn-danger"  value="View">
+
+              </form>
+<p>
+<a href="{{request.META.HTTP_REFERER}}">Go back</a>
+</p>
+      </div>
+    </div>
+
+
+
+{% endblock %}
+
+
+                    <option value = "{{results.name}}">{{results.name}}</option>
+
+</p>
+              <form method="post" action= "" id ="nmapip" >
+              {% csrf_token %}
+
+
+               </p>
+                <label for="nmapip">Enter the IP Address:</label><br>
+                 <input type="text" id="nmapip" name="nmapip" ><br>
+                 <label for="nmapsubnet">Enter Subnet Value:</label><br>
+                 <input type="text" id="nmapsubnet" name="nmapsubnet" >
+                <input type="submit" value="Submit">
+                </form>
+
+        </p>

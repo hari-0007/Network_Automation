@@ -1,0 +1,15 @@
+{% extends "base2.html" %}
+{% block body_block %}
+
+
+
+	<ul>
+		<li><a href="/basicapp/client_home" class="btn btn-primary">Home</a></li>
+		<li><a href="/basicapp/client" class="btn btn-primary">Add New Record</a></li>
+		<li><a href="/basicapp/client_show" class="btn btn-primary">Show</a></li>
+	</ul>
+
+<p>
+<a href="{{request.META.HTTP_REFERER}}">Go back</a>
+</p>
+{% endblock %}

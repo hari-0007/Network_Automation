@@ -1,0 +1,46 @@
+{% extends "base2.html" %}
+{% block body_block %}
+
+    <div class="container">
+      <div class="jumbotron">
+      <h2 >Select a date to view the capture data!</h2>
+       
+              <form method="post" action="" id="cap_date" >
+ 
+                {% csrf_token %}
+               <label for="cap_date"> Select the Date: </label>
+	        <input id="cap_date" type="date" name="cap_date">
+                </p>
+                 <label for="cap_loc">Choose your device from the list:</label>
+               <select name="cap_loc" id="cap_loc">
+                {% for i in devicelocation %}
+                <option> {{i.0}} </option>
+               {% endfor %}
+              </select>
+               </p>
+               
+         	<input type="submit" value="Submit">
+                </form>
+
+        </p>
+              <form method="post" action="/basicapp/download/" id="cap_id" >
+              {% csrf_token %}
+	      <label for="cap_id">Choose a capture ID and download:</label>
+              <select type="radio" id="cap_id" name="cap_id">
+               {% for i in datacapture %}
+               <option> {{i.0}} </option>
+               {% endfor %}
+               </select>
+              <input id="cap_id" type="submit" class="btn btn-danger"  value="Download">
+<p>
+<a href="{{request.META.HTTP_REFERER}}">Go back</a>
+</p>             
+              
+      </div>
+    </div>
+     
+   
+{% endblock %}
+   
+
+
